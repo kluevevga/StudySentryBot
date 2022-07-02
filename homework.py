@@ -31,12 +31,12 @@ RETRY_PERIOD = 600
 
 
 def check_tokens():
-    """Тест .env токенов."""
+    """Проверка подключения environment variables."""
     return all((PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID))
 
 
 def send_message(bot, message):
-    """Проходит pytest."""
+    """Отправка запроса в telegram api."""
     logger.debug('Отправка сообщений в telegram')
     logger.info(message)
 
@@ -47,7 +47,7 @@ def send_message(bot, message):
 
 
 def get_api_answer(timestamp):
-    """Проходит pytest."""
+    """Отправка запроса в yandex api."""
     logger.debug('Отправка api запроса')
 
     try:
@@ -69,7 +69,7 @@ def get_api_answer(timestamp):
 
 
 def check_response(response):
-    """Проходит pytest."""
+    """Проверка изменения статуса."""
     logger.debug('Проверка api ответа')
 
     if not isinstance(response, dict):
@@ -86,7 +86,7 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Проходит pytest."""
+    """Проверка ответа api, формирование сообщения для бота."""
     if (not homework.get('status', False)
             or not homework.get('status', False) in HOMEWORK_VERDICTS.keys()
             or not homework.get('homework_name', False)):
@@ -98,7 +98,7 @@ def parse_status(homework):
 
 
 def main():
-    """Проходит pytest."""
+    """Инициализация бота, проверка статуса каждые 10 минут."""
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
 
     if not check_tokens():
